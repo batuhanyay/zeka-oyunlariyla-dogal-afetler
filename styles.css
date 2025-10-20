@@ -1,0 +1,143 @@
+:root{
+  --bg:#0b0c10; --panel:#0f1218; --ink:#e7e9ee; --muted:#a9b1c0;
+  --border:rgba(255,255,255,.08); --shadow:0 10px 30px rgba(0,0,0,.35);
+  --maxw:1000px;      /* tek sayfa için genişlik limiti */
+  --vhAvail:82vh;     /* JS gerçek değeri hesaplayıp bunu yazar */
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  color:var(--ink); background:linear-gradient(180deg,#0b0c10,#0b0c10 400px,#0e1117);
+}
+
+.topbar{position:sticky; top:0; z-index:20; backdrop-filter:saturate(1.2) blur(6px);
+  background:rgba(14,17,23,.65); border-bottom:1px solid var(--border)}
+.wrap{max-width:1200px; margin:0 auto; padding:10px 16px; display:flex; align-items:center; gap:12px}
+.logo{font-weight:700; letter-spacing:.3px}
+.spacer{flex:1}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+
+.container{max-width:100%; margin:0; padding:0; height:calc(100vh - var(--topbar-height, 45px))}
+
+.pageShell{position:relative; margin:0; padding:0; height:100%; display:flex; flex-direction:row; gap:16px; align-items:center; justify-content:center}
+
+/* --- TEK SAYFA KUTUSU: EKRANA TAM SIĞAR --- */
+.page{
+  width: 100%;
+  height: 100%;
+  max-height: 90vh;
+  max-width: calc((90vh * 0.707));  /* A4 oranı: yükseklik * (1/√2) */
+  background:#0d1118;
+  border:1px solid var(--border);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  position:relative;
+  display:grid; place-items:center;
+  flex-shrink:0;
+}
+
+.page > img{
+  width:100%; height:100%;
+  object-fit: contain;             /* tüm görsel, crop olmadan sığsın */
+  display:block;
+}
+
+/* Sayfa geçiş container'ı */
+.page{
+  position: relative;
+  transition: none;
+}
+
+/* Eski sayfa - solarak kaybolur */
+.page.fade-out{
+  animation: fadeSlideOut 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+/* Yeni sayfa - solarak belirir */
+.page.fade-in{
+  animation: fadeSlideIn 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+/* Geçiş katmanı - smooth cross-fade için */
+.turn{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+  z-index: 10;
+}
+
+.turn.show{
+  opacity: 1;
+}
+
+/* ==================== ANIMASYONLAR ==================== */
+
+/* Çapraz solma - ileri */
+@keyframes fadeSlideOut{
+  0%{
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  100%{
+    opacity: 0;
+    transform: translateX(-50px) scale(0.95);
+  }
+}
+
+@keyframes fadeSlideIn{
+  0%{
+    opacity: 0;
+    transform: translateX(50px) scale(0.95);
+  }
+  100%{
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* ALTERNATİF: Kitap sayfası çevirme efekti (isteğe bağlı) */
+/*
+@keyframes pageFlip{
+  0%{
+    transform: perspective(1200px) rotateY(0deg);
+    opacity: 1;
+  }
+  50%{
+    transform: perspective(1200px) rotateY(90deg);
+    opacity: 0.3;
+  }
+  100%{
+    transform: perspective(1200px) rotateY(180deg);
+    opacity: 0;
+  }
+}
+*/
+
+.arrow{
+  width:60px; height:60px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:50%;
+  background:rgba(16,23,40,.85);
+  backdrop-filter:blur(8px);
+  color:#d6e2ff;
+  border:1px solid var(--border);
+  cursor:pointer;
+  font-size:24px;
+  transition:all .2s ease;
+  flex-shrink:0;
+}
+.arrow:hover:not([disabled]){
+  background:rgba(20,30,50,.95);
+  transform:scale(1.1);
+}
+.arrow[disabled]{opacity:.3; cursor:not-allowed}
+
+@media (max-width: 640px){
+  :root{ --vhAvail: 78vh; }
+}

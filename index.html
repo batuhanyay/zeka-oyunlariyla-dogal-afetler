@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zeka Oyunlarıyla Doğal Afetler - Nazan Özkan Korkmaz</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="logo">Zeka Oyunlarıyla Doğal Afetler - Nazan Özkan Korkmaz</div>
+      <div class="spacer"></div>
+      <div id="pageInfo" class="muted">Yükleniyor…</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="pageShell" aria-live="polite">
+      <button id="prevBtn" class="arrow arrow-left" disabled>⟵</button>
+
+      <div class="page">
+        <img id="pageImg" alt="Sayfa" />
+        <!-- geçiş animasyonu için üst katman -->
+        <img id="turnImg" class="turn" alt="" aria-hidden="true" />
+      </div>
+
+      <button id="nextBtn" class="arrow arrow-right">⟶</button>
+    </section>
+  </main>
+</body>
+</html>
